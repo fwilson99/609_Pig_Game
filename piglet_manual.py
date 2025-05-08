@@ -1,10 +1,10 @@
-goal = 2
+goal = 20
 
 # Non-terminal states
 states = []
 for i in range(goal):
     for j in range(goal):
-        for k in range(2 - i):
+        for k in range(goal - i):
             states.append((i, j, k))
 
 # Initialise value function
