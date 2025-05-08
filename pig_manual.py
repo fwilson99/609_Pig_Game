@@ -38,7 +38,7 @@ while True:
                 roll_val = (1 / dice_sides) * (
                     (1 - V[(j, i, 0)])
                     + sum(V[(i, j, k + r)] for r in range(2, r_star)) # 2, 3
-                    + 1 * (dice_sides - r_star + 1) # 3
+                    + min(1 * (dice_sides - r_star + 1), 5) # 3
                 )
             else:
                 roll_val = (1 / dice_sides) * (
