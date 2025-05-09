@@ -33,12 +33,12 @@ while True:
             # If a head: (i, j, k) -> (i, j, k + 1) - add a turn point (k += 1)
 
             if i + k + dice_sides >= goal:
-                r_star = goal - i - k # 4
+                r_star = goal - i - k  # 4
 
                 roll_val = (1 / dice_sides) * (
                     (1 - V[(j, i, 0)])
-                    + sum(V[(i, j, k + r)] for r in range(2, r_star)) # 2, 3
-                    + min(1 * (dice_sides - r_star + 1), 5) # 3
+                    + sum(V[(i, j, k + r)] for r in range(2, r_star))  # 2, 3
+                    + min(1 * (dice_sides - r_star + 1), 5)  # 3
                 )
             else:
                 roll_val = (1 / dice_sides) * (
