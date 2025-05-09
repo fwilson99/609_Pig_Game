@@ -1,3 +1,7 @@
+
+import json
+import os
+
 goal = 100
 dice_sides = 6
 
@@ -74,10 +78,25 @@ while True:
 
     if delta < epsilon:
         break
-
+        
     progress += 1
 
+# Store value function for future use
+store_win_probabilities = True
+filename = f"data/value_function/goal_{goal}.json"
+
+if store_win_probabilities:
+    # Convert tuple keys to strings (JSON doesn't accept tuple keys)
+    string_V = {str(key): value for key, value in V.items()}
+
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+    # Store JSON file
+    with open(filename, "w") as f:
+        json.dump(string_V, f)
+    
+
 print("Win probabilities:", V)
-print(V[(0,0,0)])
 print(min(V.values()))
 print(max(V.values()))
