@@ -15,15 +15,15 @@ V = {s: 0 for s in states}
 # Initialise convergence parameter
 epsilon = 1e-6
 
-#For tracking values at each iteration
-Value_Tracker = [[] for _ in range(len(states))]
+# For tracking values at each iteration
+value_tracker = [[] for _ in range(len(states))]
 
 while True:
 
     delta = 0
     new_V = {}
 
-    x = 0 # a counter
+    x = 0  # a counter
 
     for s in states:
         i, j, k = s
@@ -55,11 +55,11 @@ while True:
 
             delta = max(delta, abs(new_V[s] - V[s]))
 
-        #add this iteration's value function to the tracker
-        Value_Tracker[x].append(new_V[s])
+        # Add this iteration's value function to the tracker
+        value_tracker[x].append(new_V[s])
 
         x += 1
-    
+
     V = new_V
 
     if delta < epsilon:
@@ -67,14 +67,15 @@ while True:
 
 print("Win probabilities:", V)
 
-#plotting
+# Plotting
 
-for i, lst in enumerate(Value_Tracker):
+for i, lst in enumerate(value_tracker):
     y = list(range(len(lst)))
-    plt.plot(y, lst, label = f"P {states[i]}")
+    plt.plot(y, lst, label=f"P {states[i]}")
 
 plt.xlabel("Iteration")
 plt.ylabel("V(s)")
-plt.legend()
+plt.legend(fontsize="small")
 plt.ylim(0,1)
+plt.tight_layout()
 plt.show()
