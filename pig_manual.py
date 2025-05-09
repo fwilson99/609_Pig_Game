@@ -1,4 +1,4 @@
-goal = 20
+goal = 100
 dice_sides = 6
 
 # Non-terminal states
@@ -14,7 +14,11 @@ V = {s: 0 for s in states}
 # Initialise convergence parameter
 epsilon = 1e-6
 
+#Progress Tracker
+progress = 1
+
 while True:
+    print(f"Iteration {progress}")
 
     delta = 0
     new_V = {}
@@ -71,6 +75,9 @@ while True:
     if delta < epsilon:
         break
 
+    progress += 1
+
 print("Win probabilities:", V)
+print(V[(0,0,0)])
 print(min(V.values()))
 print(max(V.values()))
