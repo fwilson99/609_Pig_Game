@@ -76,5 +76,6 @@ for i, lst in enumerate(value_tracker):
 plt.xlabel("Iteration")
 plt.ylabel("V(s)")
 plt.legend(fontsize="small")
+plt.ylim(0,1)
 plt.tight_layout()
 plt.show()

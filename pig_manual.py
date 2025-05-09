@@ -1,7 +1,8 @@
+
 import json
 import os
 
-goal = 20
+goal = 100
 dice_sides = 6
 
 # Non-terminal states
@@ -17,7 +18,11 @@ V = {s: 0 for s in states}
 # Initialise convergence parameter
 epsilon = 1e-6
 
+#Progress Tracker
+progress = 1
+
 while True:
+    print(f"Iteration {progress}")
 
     delta = 0
     new_V = {}
@@ -73,6 +78,8 @@ while True:
 
     if delta < epsilon:
         break
+        
+    progress += 1
 
 # Store value function for future use
 store_win_probabilities = True
@@ -88,6 +95,7 @@ if store_win_probabilities:
     # Store JSON file
     with open(filename, "w") as f:
         json.dump(string_V, f)
+    
 
 print("Win probabilities:", V)
 print(min(V.values()))
