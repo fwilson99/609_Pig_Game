@@ -1,4 +1,3 @@
-
 import json
 import os
 
@@ -18,7 +17,7 @@ V = {s: 0 for s in states}
 # Initialise convergence parameter
 epsilon = 1e-6
 
-#Progress Tracker
+# Progress Tracker
 progress = 1
 
 while True:
@@ -78,7 +77,7 @@ while True:
 
     if delta < epsilon:
         break
-        
+
     progress += 1
 
 # Store value function for future use
@@ -95,7 +94,7 @@ if store_win_probabilities:
     # Store JSON file
     with open(filename, "w") as f:
         json.dump(string_V, f)
-    
+
 
 print("Win probabilities:", V)
 print(min(V.values()))

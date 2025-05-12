@@ -8,7 +8,7 @@ from pig_game import PigGame, PigPlayer
 
 
 # Load raw value function from JSON
-filename = "data/value_function/goal_20.json"
+filename = "data/value_function/goal_100.json"
 with open(filename, "r") as f:
     raw_V = json.load(f)
 
@@ -16,11 +16,11 @@ with open(filename, "r") as f:
 V = {eval(k): v for k, v in raw_V.items()}
 
 # Extract optimal policy
-optimal_policy = extract_optimal_policy(V=V, goal=20)
+optimal_policy = extract_optimal_policy(V=V, goal=100)
 
 # Initialise competition variables
 random.seed(12345)
-target = 20
+target = 100
 rounds = 1000
 
 # --- Test optimal policy against itself ---
