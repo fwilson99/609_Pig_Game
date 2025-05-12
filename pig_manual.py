@@ -1,4 +1,7 @@
-goal = 20
+import json
+import os
+
+goal = 100
 dice_sides = 6
 
 # Non-terminal states
@@ -14,7 +17,11 @@ V = {s: 0 for s in states}
 # Initialise convergence parameter
 epsilon = 1e-6
 
+# Progress Tracker
+progress = 1
+
 while True:
+    print(f"Iteration {progress}")
 
     delta = 0
     new_V = {}
@@ -28,18 +35,25 @@ while True:
 
         # If not a win
         else:
-            # Roll: 0.5 chance to get a tail (turn passes), 0.5 chance to increment k
-            # If a tail: (i, j, k) -> (j, i, 0) - remove turn points (k=0) and swap i and j (ending turn)
-            # If a head: (i, j, k) -> (i, j, k + 1) - add a turn point (k += 1)
 
             if i + k + dice_sides >= goal:
-                r_star = goal - i - k # 4
+                # Smallest r that wins (i + k + r >= goal)
+                r_star = goal - i - k
 
-                roll_val = (1 / dice_sides) * (
-                    (1 - V[(j, i, 0)])
-                    + sum(V[(i, j, k + r)] for r in range(2, r_star)) # 2, 3
-                    + min(1 * (dice_sides - r_star + 1), 5) # 3
-                )
+                if r_star <= 2:
+                    # All non-1 rolls are wins (roll = {1, 2})
+                    num_winning_rolls = dice_sides - 1
+                    roll_val = (1 / dice_sides) * (
+                        (1 - V[(j, i, 0)]) + num_winning_rolls
+                    )
+
+                else:
+                    # Some rolls are non-terminal, others are wins
+                    roll_val = (1 / dice_sides) * (
+                        (1 - V[(j, i, 0)])
+                        + sum(V[(i, j, k + r)] for r in range(2, r_star))
+                        + (dice_sides - r_star + 1)
+                    )
             else:
                 roll_val = (1 / dice_sides) * (
                     (1 - V[(j, i, 0)])
@@ -63,6 +77,24 @@ while True:
 
     if delta < epsilon:
         break
+
+    progress += 1
+
+# Store value function for future use
+store_win_probabilities = True
+filename = f"data/value_function/goal_{goal}.json"
+
+if store_win_probabilities:
+    # Convert tuple keys to strings (JSON doesn't accept tuple keys)
+    string_V = {str(key): value for key, value in V.items()}
+
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+    # Store JSON file
+    with open(filename, "w") as f:
+        json.dump(string_V, f)
+
 
 print("Win probabilities:", V)
 print(min(V.values()))
