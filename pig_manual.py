@@ -1,7 +1,5 @@
 import json
 import os
-import numpy as np
-import plotly.graph_objects as go
 
 goal = 100
 dice_sides = 6
@@ -107,62 +105,7 @@ if store_win_probabilities:
     with open(filename, "w") as f:
         json.dump(string_V, f)
 
-
-# Store hold and roll value functions 
-store_hold_values = True
-filename2= f"data/value_function/hold_values.json"
-
-if store_hold_values:
-    # Convert tuple keys to strings (JSON doesn't accept tuple keys)
-    string_V = {str(key): value for key, value in V.items()}
-
-    # Ensure the directory exists
-    os.makedirs(os.path.dirname(filename2),exist_ok=True)
-
-    # Store JSON file
-    with open(filename2,"w") as f:
-        json.dump(string_V, f)
-
-
 print("Win probabilities:", V)
 print(min(V.values()))
 print(max(V.values()))
 
-# Create 3D grid for each possible state
-grid = np.full((goal, goal, goal), np.nan)
-
-# Store the difference in value between holding and rolling for each (i,j,k)
-for (i, j, k) in V_hold:
-    if i < goal and j < goal and k < goal:
-        grid[i, j, k] = V_roll[(i, j, k)] - V_hold[(i, j, k)]
-
-# Prepare axis ranges
-X, Y, Z = np.meshgrid(np.arange(goal), np.arange(goal), np.arange(goal), indexing='ij')
-
-# Replace NaNs with -1 to make it work
-safe_grid = np.nan_to_num(grid, nan=-1.0)
-
-# Create the surface plot
-fig = go.Figure(data=go.Isosurface(
-    x=X.flatten(),
-    y=Y.flatten(),
-    z=Z.flatten(),
-    value=safe_grid.flatten(),
-    isomin=0,
-    isomax=0,
-    surface_count=1,
-    colorscale="Viridis",
-    caps=dict(x_show=False, y_show=False, z_show=False),
-    showscale=False
-))
-
-fig.update_layout(
-    title='Roll/hold boundary for optimal Pig policy',
-    scene=dict(
-        xaxis_title='Player 1 Score (i)',
-        yaxis_title='Player 2 Score (j)',
-        zaxis_title='Turn Score (k)'
-    )
-)
-
-fig.show()
