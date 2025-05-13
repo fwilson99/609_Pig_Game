@@ -1,7 +1,15 @@
 import numpy as np
 import plotly.graph_objects as go
+from utilities import load_value_function
 
 goal = 100
+
+# Load raw value function from JSON
+filename_hold = "data/value_function/pig/hold_100.json"
+V_hold = load_value_function(filename_hold)
+
+filename_roll = "data/value_function/pig/roll_100.json"
+V_roll = load_value_function(filename_roll)
 
 # Create 3D grid for each possible state
 grid = np.full((goal, goal, goal), np.nan)
