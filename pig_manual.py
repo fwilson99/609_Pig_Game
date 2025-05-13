@@ -108,6 +108,22 @@ if store_win_probabilities:
         json.dump(string_V, f)
 
 
+# Store hold and roll value functions 
+store_hold_values = True
+filename2= f"data/value_function/hold_values.json"
+
+if store_hold_values:
+    # Convert tuple keys to strings (JSON doesn't accept tuple keys)
+    string_V = {str(key): value for key, value in V.items()}
+
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(filename2),exist_ok=True)
+
+    # Store JSON file
+    with open(filename2,"w") as f:
+        json.dump(string_V, f)
+
+
 print("Win probabilities:", V)
 print(min(V.values()))
 print(max(V.values()))
