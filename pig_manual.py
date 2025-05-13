@@ -1,5 +1,6 @@
-import json
-import os
+
+from utilities import store_value_function
+
 
 goal = 100
 dice_sides = 6
@@ -92,18 +93,13 @@ while True:
 
 # Store value function for future use
 store_win_probabilities = True
-filename = f"data/value_function/goal_{goal}.json"
+
+filename = f"data/value_function/pig/goal_{goal}.json"
 
 if store_win_probabilities:
-    # Convert tuple keys to strings (JSON doesn't accept tuple keys)
-    string_V = {str(key): value for key, value in V.items()}
+    store_value_function(filename=filename, V=V)
 
-    # Ensure the directory exists
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
 
-    # Store JSON file
-    with open(filename, "w") as f:
-        json.dump(string_V, f)
 
 print("Win probabilities:", V)
 print(min(V.values()))

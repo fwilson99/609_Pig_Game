@@ -1,4 +1,8 @@
-goal = 20
+import matplotlib.pyplot as plt
+
+from utilities import store_value_function
+
+goal = 2
 
 # Non-terminal states
 states = []
@@ -13,10 +17,15 @@ V = {s: 0 for s in states}
 # Initialise convergence parameter
 epsilon = 1e-6
 
+# For tracking values at each iteration
+value_tracker = [[] for _ in range(len(states))]
+
 while True:
 
     delta = 0
     new_V = {}
+
+    x = 0  # a counter
 
     for s in states:
         i, j, k = s
@@ -48,9 +57,33 @@ while True:
 
             delta = max(delta, abs(new_V[s] - V[s]))
 
+        # Add this iteration's value function to the tracker
+        value_tracker[x].append(new_V[s])
+
+        x += 1
+
     V = new_V
 
     if delta < epsilon:
         break
 
 print("Win probabilities:", V)
+
+# Store value function for future use
+store_win_probabilities = True
+filename = f"data/value_function/piglet/goal_{goal}.json"
+
+if store_win_probabilities:
+    store_value_function(filename=filename, V=V)
+
+# Plotting
+for i, lst in enumerate(value_tracker):
+    y = list(range(len(lst)))
+    plt.plot(y, lst, label=f"P {states[i]}")
+
+plt.xlabel("Iteration")
+plt.ylabel("V(s)")
+plt.legend(fontsize="small")
+plt.ylim(0, 1)
+plt.tight_layout()
+plt.show()
