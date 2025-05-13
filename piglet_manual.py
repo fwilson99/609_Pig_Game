@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 
+from utilities import store_value_function
+
 goal = 2
 
 # Non-terminal states
@@ -67,8 +69,14 @@ while True:
 
 print("Win probabilities:", V)
 
-# Plotting
+# Store value function for future use
+store_win_probabilities = True
+filename = f"data/value_function/piglet/goal_{goal}.json"
 
+if store_win_probabilities:
+    store_value_function(filename=filename, V=V)
+
+# Plotting
 for i, lst in enumerate(value_tracker):
     y = list(range(len(lst)))
     plt.plot(y, lst, label=f"P {states[i]}")
@@ -76,6 +84,6 @@ for i, lst in enumerate(value_tracker):
 plt.xlabel("Iteration")
 plt.ylabel("V(s)")
 plt.legend(fontsize="small")
-plt.ylim(0,1)
+plt.ylim(0, 1)
 plt.tight_layout()
 plt.show()

@@ -1,19 +1,15 @@
 """Module performing a competition between pig players (optimal policy vs hold at 20)."""
 
-import json
 import random
 
 from optimal_policy import extract_optimal_policy
 from pig_game import PigGame, PigPlayer
+from utilities import load_value_function
 
 
 # Load raw value function from JSON
-filename = "data/value_function/goal_100.json"
-with open(filename, "r") as f:
-    raw_V = json.load(f)
-
-# Convert string keys to tuples (JSON doesn't accept tuple keys)
-V = {eval(k): v for k, v in raw_V.items()}
+filename = "data/value_function/pig/goal_100.json"
+V = load_value_function(filename)
 
 # Extract optimal policy
 optimal_policy = extract_optimal_policy(V=V, goal=100)
