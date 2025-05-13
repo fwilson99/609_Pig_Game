@@ -2,6 +2,33 @@ import json
 import os
 
 
+def store_value_tracker(filename: str, value_tracker: list[list[float]]):
+    """Store the value tracker as JSON.
+
+    Args:
+        filename (str): Filename to store the value tracker as.
+        value_tracker (list[list[float]]): Value tracker object.
+    """
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+    with open(filename, "w") as f:
+        json.dump(value_tracker, f)
+
+
+def load_value_tracker(filename: str) -> list[list[float]]:
+    """Load the value tracker from a JSON file.
+
+    Args:
+        filename (str): Filename where the JSON is stored.
+
+    Returns:
+        list[list[float]]: Value tracker object.
+    """
+    with open(filename, "r") as f:
+        value_tracker = json.load(f)
+    return value_tracker
+
+
 def store_value_function(filename: str, V: dict[tuple[int, int, int], float]):
     """Store the value function for pig or piglet as a JSON.
 
