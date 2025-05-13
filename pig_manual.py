@@ -1,4 +1,6 @@
+
 from utilities import store_value_function
+
 
 goal = 100
 dice_sides = 6
@@ -12,6 +14,8 @@ for i in range(goal):
 
 # Initialise value function
 V = {s: 0 for s in states}
+V_roll = {s: 0 for s in states}
+V_hold = {s: 0 for s in states}
 
 # Initialise convergence parameter
 epsilon = 1e-6
@@ -24,6 +28,8 @@ while True:
 
     delta = 0
     new_V = {}
+    new_V_roll = {}
+    new_V_hold = {}
 
     for s in states:
         i, j, k = s
@@ -31,6 +37,8 @@ while True:
         # The player can hold and win
         if i + k >= goal:
             new_V[s] = 1
+            new_V_roll[s] = 0
+            new_V_hold[s] = 1
 
         # If not a win
         else:
@@ -69,10 +77,14 @@ while True:
                 hold_val = 1 - V[(j, i + k, 0)]
 
             new_V[s] = max(roll_val, hold_val)
+            new_V_roll[s] = roll_val
+            new_V_hold[s] = hold_val
 
             delta = max(delta, abs(new_V[s] - V[s]))
 
     V = new_V
+    V_roll = new_V_roll
+    V_hold = new_V_hold
 
     if delta < epsilon:
         break
@@ -81,12 +93,15 @@ while True:
 
 # Store value function for future use
 store_win_probabilities = True
+
 filename = f"data/value_function/pig/goal_{goal}.json"
 
 if store_win_probabilities:
     store_value_function(filename=filename, V=V)
 
 
+
 print("Win probabilities:", V)
 print(min(V.values()))
 print(max(V.values()))
+
