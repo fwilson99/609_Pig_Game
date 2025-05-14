@@ -1,3 +1,4 @@
+### 2D cross-section graph (j=30)
 import numpy as np
 import plotly.graph_objects as go
 from utilities import load_value_function
@@ -21,33 +22,32 @@ for (i, j, k) in V_hold:
     if i < goal and j < goal and k < goal:
         grid[i, j, k] = V_roll[(i, j, k)] - V_hold[(i, j, k)]
 
-# Prepare axis ranges
-X, Y, Z = np.meshgrid(np.arange(goal), np.arange(goal), np.arange(goal), indexing='ij')
 
-# Replace NaNs with -1 to make it work
-safe_grid = np.nan_to_num(grid, nan=-1.0)
+# Extract cross-section at j = 30
+cross_section = grid[:, 30, :]  
 
-# Create the surface plot
-fig = go.Figure(data=go.Isosurface(
-    x=X.flatten(),
-    y=Y.flatten(),
-    z=Z.flatten(),
-    value=safe_grid.flatten(),
-    isomin=0,
-    isomax=0,
-    surface_count=1,
-    colorscale="Viridis",
-    caps=dict(x_show=False, y_show=False, z_show=False),
+# Transpose so i is on x-axis, k is on y-axis
+cross_section_transposed = cross_section.T  
+
+# Plot contour at value = 0 (i.e. where policy changes from roll to hold)
+fig = go.Figure(data=go.Contour(
+    z=cross_section_transposed,
+    contours=dict(
+        start=0, end=0, size=1,
+        coloring='none',
+        showlabels=False
+    ),
+    line_width=2,
     showscale=False
 ))
 
 fig.update_layout(
-    title='Roll/hold boundary for optimal Pig policy',
-    scene=dict(
-        xaxis_title='Player 1 Score (i)',
-        yaxis_title='Player 2 Score (j)',
-        zaxis_title='Turn Score (k)'
-    )
+    title='Policy Boundary at j = 30',
+    xaxis_title='i',
+    yaxis_title='k',
+    width=700,
+    height=600
 )
 
 fig.show()
+
