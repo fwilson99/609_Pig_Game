@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "609_advanced_git"
+version = "1.0.0"
+maintainers = [
+  { name="Fiona Wilson", email="f.wilson2@lancaster.ac.uk" },
+]
+authors = [
+  { name="Fiona Wilson", email="f.wilson2@lancaster.ac.uk" },
+  { name="Jimmy Lin", email="j.lin36@lancaster.ac.uk" },
+  { name="Cassandra Durr", email="c.durr@lancaster.ac.uk" },
+]
+dynamic=["dependencies"]
+description = "Value iteration algorithm for solving Pig and Piglet. Replication study of Neller, T. W., & Presser, C. G. (2004). Optimal play of the dice game pig. The UMAP Journal, 25(1)."
+readme = "README.md"
+requires-python = ">=3.12"
+keywords=["value iteration", "Pig", "Piglet", "Optimal play of the dice game pig"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+]
+
+[tool.setuptools.dynamic]
+dependencies={file="requirements/requirements.txt"}
+
+[project.urls]
+"Homepage"="https://github.com/fwilson99/609_advanced_git"
+"Bug Tracker"="https://github.com/fwilson99/609_advanced_git/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
