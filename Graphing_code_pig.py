@@ -11,6 +11,8 @@ V_hold = load_value_function(filename_hold)
 filename_roll = "data/value_function/pig/roll_100.json"
 V_roll = load_value_function(filename_roll)
 
+
+### 3D boundary graph
 # Create 3D grid for each possible state
 grid = np.full((goal, goal, goal), np.nan)
 
