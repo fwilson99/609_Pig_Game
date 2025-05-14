@@ -56,9 +56,19 @@ fig.add_trace(go.Contour(
     line_width=2,
     line_color='black',
     showscale=False,
-    name='Policy Boundary', 
+    name='Optimal Policy Boundary', 
     showlegend=False
 ))
+
+# Add the hold at 20 line
+fig.add_trace(go.Scatter(x=[0, reachable_matrix.shape[1]-1],
+    y=[20, 20],
+    mode='lines',
+    line=dict(color='grey', width=2, dash='dash'),
+    name='Hold at 20 Policy',
+    showlegend=False
+))
+
 
 # Reachable Region Key
 fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers', 
@@ -67,6 +77,10 @@ fig.add_trace(go.Scatter(x=[None], y=[None], mode='markers',
 # Boundary Key
 fig.add_trace(go.Scatter(x=[None], y=[None], mode='lines', 
                          line=dict(color='black', width=2), name='Policy Boundary'))
+
+# Hold at 20 Key
+fig.add_trace(go.Scatter(x=[None], y=[None], mode='lines', 
+                         line=dict(color='grey', width=2, dash='dash'), name='Hold at 20 Policy'))
 
 # Layout
 fig.update_layout(
