@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-from utilities import store_value_function
+from utilities import store_value_function, store_value_tracker
 
 goal = 2
 
@@ -72,9 +72,11 @@ print("Win probabilities:", V)
 # Store value function for future use
 store_win_probabilities = True
 filename = f"data/value_function/piglet/goal_{goal}.json"
+tracker_filename = f"data/value_function/piglet/value_tracker_goal_{goal}.json"
 
 if store_win_probabilities:
     store_value_function(filename=filename, V=V)
+    store_value_tracker(tracker_filename, value_tracker)
 
 # Plotting
 for i, lst in enumerate(value_tracker):
