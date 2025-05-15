@@ -1,3 +1,5 @@
+"""Module with utility/ helper functions for storing and loading data, as well as running Pig competitions between optimal players and players following the hold at 20 strategy."""
+
 import json
 import os
 import math
