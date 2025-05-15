@@ -1,3 +1,4 @@
+"""Module providing the value iteration routine applied to the Pig game. Results are optionally stored to prevent rerunning the code many times."""
 
 from utilities import store_value_function
 
@@ -91,20 +92,14 @@ while True:
 
     progress += 1
 
-# Store value function for future use
+# Store value function and action values for future use
 store_win_probabilities = True
 
 filename = f"data/value_function/pig/goal_{goal}.json"
-filename_hold =  f"data/value_function/pig/hold_{goal}.json"
-filename_roll =  f"data/value_function/pig/roll_{goal}.json"
+filename_hold = f"data/value_function/pig/hold_{goal}.json"
+filename_roll = f"data/value_function/pig/roll_{goal}.json"
 
 if store_win_probabilities:
     store_value_function(filename=filename, V=V)
     store_value_function(filename=filename_hold, V=V_hold)
     store_value_function(filename=filename_roll, V=V_roll)
-
-
-print("Win probabilities:", V)
-print(min(V.values()))
-print(max(V.values()))
-

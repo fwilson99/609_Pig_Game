@@ -1,4 +1,4 @@
-import matplotlib.pyplot as plt
+"""Module providing the value iteration routine applied to the Piglet game. Results are optionally stored to prevent rerunning the code many times."""
 
 from utilities import store_value_function, store_value_tracker
 
@@ -67,9 +67,7 @@ while True:
     if delta < epsilon:
         break
 
-print("Win probabilities:", V)
-
-# Store value function for future use
+# Store value function and value tracker for future use
 store_win_probabilities = True
 filename = f"data/value_function/piglet/goal_{goal}.json"
 tracker_filename = f"data/value_function/piglet/value_tracker_goal_{goal}.json"
@@ -77,15 +75,3 @@ tracker_filename = f"data/value_function/piglet/value_tracker_goal_{goal}.json"
 if store_win_probabilities:
     store_value_function(filename=filename, V=V)
     store_value_tracker(tracker_filename, value_tracker)
-
-# Plotting
-for i, lst in enumerate(value_tracker):
-    y = list(range(len(lst)))
-    plt.plot(y, lst, label=f"P {states[i]}")
-
-plt.xlabel("Iteration")
-plt.ylabel("V(s)")
-plt.legend(fontsize="small")
-plt.ylim(0, 1)
-plt.tight_layout()
-plt.show()
