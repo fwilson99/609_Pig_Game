@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "609_advanced_git"
+name = "609_Pig_Game"
 version = "1.0.0"
 maintainers = [
   { name="Fiona Wilson", email="f.wilson2@lancaster.ac.uk" },
@@ -29,8 +29,8 @@ classifiers = [
 dependencies={file="requirements/requirements.txt"}
 
 [project.urls]
-"Homepage"="https://github.com/fwilson99/609_advanced_git"
-"Bug Tracker"="https://github.com/fwilson99/609_advanced_git/issues"
+"Homepage"="https://github.com/fwilson99/609_Pig_Game"
+"Bug Tracker"="https://github.com/fwilson99/609_Pig_Game/issues"
 
 [tool.setuptools.packages.find]
 where = ["."]

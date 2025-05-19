@@ -14,8 +14,8 @@ This repository can be installed using `git clone`.
 To clone the repository and install it locally, run the following commands in terminal:
 
 ```
-git clone https://github.com/fwilson99/609_advanced_git.git
-cd 609_advanced_git
+git clone https://github.com/fwilson99/609_Pig_Game.git
+cd 609_Pig_Game
 pip install -e .
 ```
 
